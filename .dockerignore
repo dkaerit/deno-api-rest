@@ -1,0 +1,8 @@
+node_modules
+npm-debug.log
+.dockerignore
+dockerfile
+run.*
+*.ps1
+*.sh
+.deployment.env.json
