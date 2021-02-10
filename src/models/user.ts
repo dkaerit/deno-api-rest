@@ -1,5 +1,5 @@
-import * as bcrypt from "https://deno.land/x/bcrypt/mod.ts";
-import db from '../config/database.ts';
+import { bcrypt } from "../deps.ts";
+import db from '../config/mongo.ts';
 
 // subtipado estructural
 interface UserSchema {
@@ -7,7 +7,7 @@ interface UserSchema {
     user: string;
     email: string;
     passwd: string;
-}
+};
 
 export default class UserClass<UserSchema> {
     constructor() {};
@@ -19,8 +19,7 @@ export default class UserClass<UserSchema> {
     addUser() {
         return async ({ request, response }: { request: any; response: any }) => {
 
-            try
-            {
+            try {
                 // Encriptar la pass
                 const 
                     salt = await bcrypt.genSalt(10),

@@ -1,27 +1,28 @@
-/*server*/      import { Application } from "https://deno.land/x/oak/mod.ts"; const app = new Application();
-/*cors*/        import { oakCors } from "https://deno.land/x/cors/mod.ts";
-/*http logger*/ import { organ } from "https://raw.githubusercontent.com/denjucks/organ/master/mod.ts";
-/*bodyparser*/
-
+import { 
+    Application
+} from "./deps.ts"; const app = new Application();
 
 
 // DATOS DEL SERVIDOR
 const env = Deno.env.toObject();      // Obtenemos objeto variables de entorno
-const PORT = env.PORT || 8081;        // Puerto
 const HOST = env.HOST || '0.0.0.0';   // IP del servidor
+const PORT = env.PORT || 8081;        // Puerto
+
 
 
 // MIDDLEWARES
-app.use(organ());
-app.use(oakCors());
+//app.use(organ());
+//app.use(oakCors());
+
+
 
 // RUTAS 
 import IndexRouter from './routes/index.ts';
-import UserRouter from './routes/user.ts';
+//import UserRouter from './routes/user.ts';
 
 [ 
-IndexRouter,
-UserRouter
+IndexRouter
+//UserRouter
 ].map(route => {
     app.use(route.routes());         // Usar las rutas creadas 
     app.use(route.allowedMethods());
