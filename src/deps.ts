@@ -14,7 +14,7 @@ export type { RouterContext, Context } from "https://deno.land/x/oak@v6.5.0/mod.
 export * as bcrypt from "https://deno.land/x/bcrypt@v0.2.4/mod.ts"; 
 
 export { Collection } from "https://deno.land/x/mongo@v0.21.0/src/collection/collection.ts";
-export { Bson, MongoClient } from "https://deno.land/x/mongo@v0.21.2/mod.ts";
+export { Bson, MongoClient } from "https://deno.land/x/mongo@v0.21.0/mod.ts";
 
 export {
   create,

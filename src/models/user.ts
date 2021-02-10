@@ -1,5 +1,7 @@
 import { bcrypt } from "../deps.ts";
+import { RouterContext } from "../deps.ts";
 import db from '../config/mongo.ts';
+
 
 // subtipado estructural
 interface UserSchema {
@@ -13,37 +15,38 @@ export default class UserClass<UserSchema> {
     constructor() {};
     
     // Atributes
-    collection = db.collection("users");
+    collection = db.collection<UserSchema>("users");
     
     // Controladores
     addUser() {
-        return async ({ request, response }: { request: any; response: any }) => {
+        return async (ctx: RouterContext) => {
 
             try {
                 // Encriptar la pass
-                const 
-                    salt = await bcrypt.genSalt(10),
-                    passwd = await bcrypt.hash(await request.body().passwd, salt);
+                const
+                    body = await ctx.request.body().value, // capturamos el body
+                    salt = await bcrypt.genSalt(10), 
+                    passwd = await bcrypt.hash(body.passwd, salt); 
 
                 // insertar datos en mongo
                 const oid = await this.collection.insertOne({
-                    user: await request.body().user,
-                    email: await request.body().email,
+                    user: body.user,
+                    email: body.email,
                     passwd: passwd,
                     date: new Date(Date.now())
                 });
                 
                 // mensaje de respuesta
-                response.status = 200;
-                response.body = {
-                    status: response.status, 
-                    message: {...oid, ctx: `Created.`}
+                ctx.response.status = 200;
+                ctx.response.body = {
+                    status: ctx.response.status, 
+                    message: {...oid, msg: `Created.`}
                 };  
-            } catch(e) {
-                response.body = {
-                    status: response.status, 
-                    message: {error: e, ctx: `Error.`}
-                };  
+            } catch(err) {
+                switch(ctx.response.status) {
+                    case 400: ctx.throw(400, "Bad Request: content is missing");
+                    default: ctx.throw(500, "Something else went wrong");
+                }
             }
                    
             
@@ -51,41 +54,44 @@ export default class UserClass<UserSchema> {
     } 
 
     getAllUsers() {
-        return async ({ response }: { response: any }) => {
-            response.body = await this.collection.find({ email: { $ne: null } });
-            response.status = 200; 
+        return async (ctx: RouterContext) => {
+            ctx.response.body = this.collection.find({ email: { $ne: null } });
+            ctx.response.status = 200; 
         }
     } 
 
     getUser() {
-        return async ({ params, response }: { params: {user: string}; response: any }) => {
-            response.body = await this.collection.find({"user": params.user.substr(1, params.user.length)});
-            response.status = 200; 
+        return async (ctx: RouterContext) => {
+            if(ctx.params.user)
+            ctx.response.body = this.collection.find({"user": ctx.params.user.substr(1, ctx.params.user.length)});
+            ctx.response.status = 200;             
         }
     } 
 
     updateUser() {
-        return async ({params, request, response}: {params: {user: string}; request: any; response: any}) => {
+        return async (ctx: RouterContext) => {
+            if(ctx.params.user){
+                const oid = await this.collection.updateOne(
+                    { "user": ctx.params.user.substr(1, ctx.params.user.length) },
+                    { $set: await ctx.request.body().value}
+                );
 
-            const oid = await this.collection.updateOne(
-                { "user": params.user.substr(1, params.user.length) },
-                { $set: await request.body().value}
-            );
-
-            response.status = 200; 
-            response.body = {status: response.status, message: {
-                ...oid,
-                ctx: `Updated.`
-            }};      
+                ctx.response.status = 200; 
+                ctx.response.body = {status: ctx.response.status, message: {
+                    ...oid,
+                    ctx: `Updated.`
+                }};   
+            }
         }
     }
     
     deleteUser() {
-        return async ({params, response}: {params: {user: string}; response: any}) => {
-            await this.collection.deleteOne({"uid": params.user.substr(1, params.user.length)});
+        return async (ctx: RouterContext) => {
+            if(ctx.params.user)
+            await this.collection.deleteOne({"uid": ctx.params.user.substr(1, ctx.params.user.length)});
 
-            response.status = 200; 
-            response.body = {status: response.status, message: "OK."};
+            ctx.response.status = 200; 
+            ctx.response.body = {status: ctx.response.status, message: "OK."};
         }
     } 
 }

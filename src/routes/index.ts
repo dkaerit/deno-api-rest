@@ -1,4 +1,5 @@
 import { Router } from "../deps.ts";
+import { RouterContext } from "../deps.ts";
 
 const IndexRouter = new Router();
 
@@ -8,7 +9,7 @@ export default IndexRouter
 
 // CONTROLADORES
 function version() {
-    return async ({response}: {response: any}) => {
-        response.body = "STACK DVOM V. 0.1.0";
+    return async (ctx: RouterContext) => {
+        ctx.response.body = "STACK DVOM V. 0.1.0";
     }
 } 

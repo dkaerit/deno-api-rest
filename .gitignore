@@ -6,6 +6,7 @@
 # Default
 # git update-index --assume-unchanged .env
 .dist
+*.env
 
 # User-specific files
 *.rsuser

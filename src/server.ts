@@ -18,11 +18,11 @@ const PORT = env.PORT || 8081;        // Puerto
 
 // RUTAS 
 import IndexRouter from './routes/index.ts';
-//import UserRouter from './routes/user.ts';
+import UserRouter from './routes/user.ts';
 
 [ 
-IndexRouter
-//UserRouter
+IndexRouter,
+UserRouter
 ].map(route => {
     app.use(route.routes());         // Usar las rutas creadas 
     app.use(route.allowedMethods());
