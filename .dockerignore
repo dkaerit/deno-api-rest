@@ -6,3 +6,5 @@ run.*
 *.ps1
 *.sh
 .deployment.env.json
+LICENSE
+README.md
