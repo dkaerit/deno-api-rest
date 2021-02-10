@@ -1,10 +1,10 @@
 import { bcrypt } from "../deps.ts";
 import { RouterContext } from "../deps.ts";
 import db from '../config/mongo.ts';
-
+import { insertEntry } from '../config/mongo.ts';
 
 // subtipado estructural
-interface UserSchema {
+export interface UserSchema {
     _id: {$oid: string};
     user: string;
     email: string;
@@ -12,44 +12,36 @@ interface UserSchema {
 };
 
 export default class UserClass<UserSchema> {
-    constructor() {};
-    
-    // Atributes
-    collection = db.collection<UserSchema>("users");
+    collection:any;
+    constructor(mode:string) {
+        switch(mode) {
+            case "MONGO": // Si la BDD es mongo, collection se asigna a la colección de la BDD
+                this.collection = db.collection<UserSchema>("users");
+                break;
+            case "MYSQL": // Si la BDD es relacional, collection se asigna a la tabla asociada
+                this.collection = "USUARIO"; 
+            default: 
+                throw "Se esperaba una base de datos específica";
+        }
+    };
     
     // Controladores
     addUser() {
         return async (ctx: RouterContext) => {
-
             try {
-                // Encriptar la pass
-                const
-                    body = await ctx.request.body().value, // capturamos el body
-                    salt = await bcrypt.genSalt(10), 
-                    passwd = await bcrypt.hash(body.passwd, salt); 
-
-                // insertar datos en mongo
-                const oid = await this.collection.insertOne({
-                    user: body.user,
-                    email: body.email,
-                    passwd: passwd,
-                    date: new Date(Date.now())
-                });
+                const body = await ctx.request.body().value; // capturar el body
+                const passwd = encrypt(body.passwd);  // Encriptar la pass 
+                const oid = await insertEntry(this.collection, {...body, passwd}); // insertar datos en mongo
                 
                 // mensaje de respuesta
                 ctx.response.status = 200;
-                ctx.response.body = {
-                    status: ctx.response.status, 
-                    message: {...oid, msg: `Created.`}
-                };  
+                ctx.response.body = {...oid, msg: `Created.`};
             } catch(err) {
                 switch(ctx.response.status) {
                     case 400: ctx.throw(400, "Bad Request: content is missing");
                     default: ctx.throw(500, "Something else went wrong");
                 }
             }
-                   
-            
         }
     } 
 
@@ -70,7 +62,7 @@ export default class UserClass<UserSchema> {
 
     updateUser() {
         return async (ctx: RouterContext) => {
-            if(ctx.params.user){
+            if(ctx.params.user) {
                 const oid = await this.collection.updateOne(
                     { "user": ctx.params.user.substr(1, ctx.params.user.length) },
                     { $set: await ctx.request.body().value}
@@ -94,4 +86,9 @@ export default class UserClass<UserSchema> {
             ctx.response.body = {status: ctx.response.status, message: "OK."};
         }
     } 
+}
+
+async function encrypt(passwd: any) {
+    const salt = await bcrypt.genSalt(10);
+    return bcrypt.hash(passwd, salt); 
 }

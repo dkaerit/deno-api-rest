@@ -2,7 +2,7 @@ import { Router } from "../deps.ts";
 import UserClass from '../models/user.ts';               
 
 const 
-    user = new UserClass(), 
+    user = new UserClass("MONGO"), 
     UserRouter = new Router({prefix: '/user'});
 
 // RUTAS
