@@ -1,4 +1,4 @@
-FROM hayd/alpine-deno:1.4.6
+FROM hayd/alpine-deno:1.10.2
 
 EXPOSE 8081 
 WORKDIR /srv/www
@@ -9,7 +9,5 @@ USER root
 
 ADD . .
 
-RUN deno cache --unstable server.ts
-RUN deno install -qAf --unstable https://x.nest.land/denon@2.4.4/denon.ts
-ENTRYPOINT ["/usr/local/bin/denon"]
-CMD ["run", "-A", "--unstable", "./src/server.ts"]
+RUN deno cache --unstable mod.ts
+CMD ["run", "-A", "--unstable", "mod.ts"]
