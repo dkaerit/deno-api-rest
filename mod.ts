@@ -1,13 +1,11 @@
 import { Application, oakCors } from "./src/deps.ts"; const app = new Application();
 //import { authorized } from "./authorized.ts";
 
-console.log();
-var t0 = performance.now();
-var projectName = `deno-api-rest`;
-var versioning = `0.1.0`;
-
 // ————————————————————————————————————————————————— DATOS DEL SERVIDOR
-console.log(`> ${projectName}@${versioning} mounting data`);
+console.log(`\n`);
+const t0 = performance.now();
+const projectName = `deno-api-rest`;
+const versioning = `0.1.0`;
 const env = Deno.env.toObject();                     // Obtenemos objeto variables de entorno
 const HOST = '0.0.0.0' || env.HOST;                  // IP del servidor
 const PORT = 8081 || Number(env.PORT) ;              // Puerto
