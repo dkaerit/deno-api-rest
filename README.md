@@ -1,15 +1,22 @@
 <center><img src="https://i.imgur.com/GtgLBvg.png"></center>
 Backend básico con deno implementado en typescript
 
-## Paralelismos
+## Generalidades
   * Sin gestor de paquetes: [Modulos de terceros](https://deno.land/x)
 
-## Guía
+## Ejecutar
 
 ```bash
-$ mkdir <project-name>
-$ git clone <repo> backend
+$ git clone git@github.com:dkaerit/deno-api-rest.git backend
 $ cd backend
 $ git update-index --assume-unchanged .env
-$ .\image.ps1
+$ ./exe.image.ps1
 ```
+
+## JWT
+
+## Rutas
+
+## Modelos
+
+## Base de datos
