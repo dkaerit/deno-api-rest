@@ -10,9 +10,13 @@ export interface UserSchema {
 }
 
 export const User = {
+
+
   addUser() {
     return async (ctx: Context) => {
+      if (!ctx.request.hasBody) ctx.throw(400, "Bad Request: body is missing");
       const value = await ctx.request.body().value;
+
       ctx.response.body = await Query.createEntry(value, collection);
       ctx.response.status = 200;
     }
@@ -37,8 +41,10 @@ export const User = {
 
   updateUser() {
     return async (ctx: RouterContext) => {
+      if (!ctx.request.hasBody) ctx.throw(400, "Bad Request: body is missing");
       const name = ctx.params.user? ctx.params.user.substr(1, ctx.params.user.length):'';
       const value = await ctx.request.body().value;
+
       console.log(value,name);
       ctx.response.body = await Query.updateEntry("user", name, value, collection);
       ctx.response.status = 200;
@@ -46,7 +52,7 @@ export const User = {
   },
 
   deleteUser() {
-    return async (ctx: RouterContext) => {
+    return async (ctx: RouterContext) => {     
       const name = ctx.params.user? ctx.params.user.substr(1, ctx.params.user.length):'';
       ctx.response.body = await Query.deleteEntry("user", name, collection);
       ctx.response.status = 200;
