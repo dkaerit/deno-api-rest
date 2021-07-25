@@ -1,6 +1,5 @@
 import { getQuery, Context, RouterContext } from "../deps.ts";
-import db from "../database/mongodb.ts";
-import { Query } from "../database/mongodb.ts";
+import db, { Query } from "../database/mongodb.ts";
 
 const collection = db.collection<UserSchema>("users");
 export interface UserSchema {
@@ -53,6 +52,7 @@ export const User = {
       ctx.response.status = 200;
     }
   },
-
 }
+
+// ————————————————————————————————————————————————— AUXILIARES
 

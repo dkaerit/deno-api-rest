@@ -9,3 +9,4 @@ export { Collection } from "https://deno.land/x/mongo@v0.21.0/src/collection/col
 export { Bson, MongoClient } from "https://deno.land/x/mongo@v0.21.0/mod.ts";
 
 export { create, decode, getNumericDate, verify } from "https://deno.land/x/djwt@v2.1/mod.ts";
+export type { Header } from "https://deno.land/x/djwt@v2.1/mod.ts";

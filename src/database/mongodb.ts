@@ -45,6 +45,12 @@ export const Query = {
       { noCursorTimeout: false } as Record<string,unknown>);
   },
 
+  async findByFilters(filter:Record<string,any>, collection:Collection<any>): Promise<any> {
+    return await collection.findOne(
+      filter, 
+      { noCursorTimeout: false } as Record<string,unknown>);
+  },
+
 
 
   async updateEntry(field:string, filter:string, entry:Record<string,unknown>, collection:Collection<any>): Promise<any> {

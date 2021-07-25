@@ -3,8 +3,8 @@ import { Router, RouterContext } from "../deps.ts";
 
 // RUTAS
 const RootRouter = new Router();
-export default RootRouter 
-    .get('/', version())    
+export default RootRouter  // Rutas raíz
+    .get('/', version())   // "/" → version()
 
 // CONTROLADORES
 function version() {

@@ -20,16 +20,17 @@ app.use(oakCors());
 console.log(`> ${projectName}@${versioning} adding routes`);
 [                                                    // Incluír rutas
     await import('./src/routes/root.ts').then(module => module.default),
-    await import('./src/routes/users.ts').then(module => module.default)
+    await import('./src/routes/users.ts').then(module => module.default),
+    await import('./src/routes/auth.ts').then(module => module.default)
 ].map(route => {                                     // por cada ruta:
     app.use(route.routes());                         // Usar las rutas creadas 
-    app.use(route.allowedMethods());                 // POST, DELETE, GET
+    app.use(route.allowedMethods());                 // POST, DELETE, GET, PUT
 });
 
 
 // ————————————————————————————————————————————————— STARTING THE SERVER
 var t1 = performance.now()
-console.log('\n\x1b[42m\x1b[30m',' DONE ','\x1b[0m\x1b[32m', ` Success starting the server ${(t1-t0).toFixed(6)}ms\n`,'\x1b[0m');
+console.log('\n\x1b[42m\x1b[30m',' DONE ','\x1b[0m\x1b[32m', ` Success starting the server ${(t1-t0).toFixed(4)}ms\n`,'\x1b[0m');
 console.log('  🦕 Server running at:');
 console.log(`  - Local:`, '\x1b[33m',`\thttp://localhost:${PORT}`,'\x1b[0m');
 console.log(`  - Network:`, '\x1b[33m',`\thttp://${HOST}:${PORT}`,'\x1b[0m');
