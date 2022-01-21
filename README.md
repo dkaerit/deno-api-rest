@@ -24,8 +24,9 @@ $ git update-index --assume-unchanged .env
 $ ./exe.image.ps1
 ```
 
+
 ## JWT
-<center><img src="https://user-images.githubusercontent.com/24440929/150577653-5b4bf9bb-18a7-4bd0-a3d9-7c5428c8518c.png"></center>
+<center><img src="https://user-images.githubusercontent.com/24440929/150577724-c55dfaab-3480-4e29-ab0b-6a76601d3914.png"></center>
 
 ## Rutas
 
