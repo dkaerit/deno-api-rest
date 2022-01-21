@@ -48,15 +48,13 @@ export interface UserSchema {
 
 ## Rutas
 ```typescript
-addUser() {
-  return async (ctx: Context) => {
-    if (!ctx.request.hasBody) ctx.throw(400, "Bad Request: body is missing");
-    const value = await ctx.request.body().value;
-
-    ctx.response.body = await Query.createEntry(value, collection);
-    ctx.response.status = 200;
-  }
-},
+const UserRouter = new Router({prefix: '/users'});
+export default UserRouter                              // Rutas referidas al modelo "Usuario"
+    .post("/create", User.addUser())                   // "/create"            → addUser()
+    .get("/all", guard, User.getAllUsers())            // "/all"       ~guard~ → getAllUsers()
+    .get("/user:user", guard, User.getUser())          // "/user:id"   ~guard~ → getUser()
+    .put('/update:user', guard, User.updateUser())     // "/update:id" ~guard~ → updateUser()
+    .delete('/delete:user', guard, User.deleteUser())  // "/delete:id" ~guard~ → deleteUser()
 ```
 
 
