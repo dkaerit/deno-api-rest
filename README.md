@@ -35,8 +35,30 @@ JWT server genera el json a raíz de lo que en este proyecto denominamos los `es
 
 Este servicio se encuentra implementado en el fichero `services/jwt.ts` y la ruta que retorna el token al frontend es manejado por el handler `login()` en ``models/auth.ts`.
 
-## Rutas
-
 ## Modelos
+### Usuarios
+```typescript
+export interface UserSchema {
+  _id: {$oid: string};
+  user: string;
+  email: string;
+  passwd: string;
+}
+```
+
+## Rutas
+```typescript
+addUser() {
+  return async (ctx: Context) => {
+    if (!ctx.request.hasBody) ctx.throw(400, "Bad Request: body is missing");
+    const value = await ctx.request.body().value;
+
+    ctx.response.body = await Query.createEntry(value, collection);
+    ctx.response.status = 200;
+  }
+},
+```
+
+
 
 ## Base de datos
