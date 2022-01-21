@@ -33,6 +33,16 @@ El funcionamiento es el siguiente: Dado un header de la forma `{username, passwo
 
 JWT server genera el json a raíz de lo que en este proyecto denominamos los `essentials` (para simplificar), compuesto de un header `{ alg: "HS512", typ: "JWT" }`, el payload `{ user, expiry }` y un secreto `TOKEN_SECRET` (éste último normalmente almacenado en las variables de entorno pues no debe ser conocido). 
 
+```typescript
+function makeEssentials(user:string) {
+  const expìry = getNumericDate(60*60*24); // 24 horas
+  const header = { alg: "HS512", typ: "JWT" } as Header;
+  const payload = { user, expiry } as Payload;
+  const secret = Deno.env.get("TOKEN_SECRET") as string // Obtener el secreto en "env"
+  return {header,payload,secret}
+}
+```
+
 Este servicio se encuentra implementado en el fichero `services/jwt.ts` y la ruta que retorna el token al frontend es manejado por el handler `login()` en ``models/auth.ts`.
 
 ## Modelos
