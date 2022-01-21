@@ -29,7 +29,9 @@ $ ./exe.image.ps1
 <img align="right" src="https://user-images.githubusercontent.com/24440929/150584119-a836a85b-0330-4686-b3ed-5871cc3378e9.png"> 
 JWT es un estandar y servicio que nos permitirá la gestión de los web token en el backend. De esta manera se podrá asociar a cada sesión de los usuarios en el frontend un token, y dotar de la seguridad necesaria a la aplicación web, así como restringir el acceso de cierta vistas del frontend para cuentas que han iniciado sesión, e incluso a ciertas peticiones http solicitadas al backend.
 
+
 El funcionamiento es el siguiente: Dado un header de la forma `{username, password}` desde el frontend, primero se verifica que dicho usuario para dicha contraseña existe en la base de datos. Este arrojará verdadero o falso si encontró tal coincidencia. Siendo falso el fin del proceso y por ende, la denegación del token, y sinedo entonces verdadero el que permita continuar con el proceso. 
+
 
 JWT server (servicio ajeno a la api-rest) genera el json a raíz de lo que en este proyecto denominamos (para simplificar) los `essentials`, compuesto de un header `{ alg: "HS512", typ: "JWT" }`, el payload `{ user, expiry }` y un secreto `TOKEN_SECRET` (éste último normalmente almacenado en las variables de entorno pues no debe ser conocido). 
 
