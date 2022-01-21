@@ -6,7 +6,11 @@
 <img src="https://img.shields.io/badge/license-MIT-17a8c8" alt="License">
 </p>
 
-Backend básico con deno implementado en typescript
+## About
+
+Deno api rest baseplate es una estructura de partida cuya finalidad sea darle uso para ahorrar tiempo en la implementación de un backend con dicho framewrok, en una intención de ahorrar tiempo o bien para proyectos de uso didácticos o personales. 
+
+Este proyecto forma parte de la colección api rest baseplate como micro servicios.
 
 ## Generalidades
   * Sin gestor de paquetes: [Modulos de terceros](https://deno.land/x)
