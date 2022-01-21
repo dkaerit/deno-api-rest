@@ -1,4 +1,11 @@
 <center><img src="https://i.imgur.com/GtgLBvg.png"></center>
+
+<p align="center">
+<img src="https://img.shields.io/github/commit-activity/y/dkaerit/deno-api-rest?color=17a8c8">
+<img src="https://img.shields.io/github/downloads/dkaerit/deno-api-rest/total?color=17a8c8">
+<img src="https://img.shields.io/badge/license-MIT-17a8c8" alt="License">
+</p>
+
 Backend básico con deno implementado en typescript
 
 ## Generalidades
