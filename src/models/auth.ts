@@ -16,9 +16,7 @@ export const Auth = {
         const value = getValue(ctx, await ctx.request.body().value);  // {user, passwd}
         checkUser(ctx, await Query.findByFilters(value,collection));
         
-        const {header,payload} = makeEssentials(value.user) // Hacer los Essentials (valores necesarios para jwt)
-        const secret = Deno.env.get("TOKEN_SECRET") as string // Obtener el secreto en "env"
-        
+        const {header,payload,secret} = makeEssentials(value.user) // Hacer los Essentials (valores necesarios para jwt)
         ctx.response.body = { token: await create(header, payload, secret) }; // Genera el token desde el server jwt
         ctx.response.status = 200;
       }
@@ -30,7 +28,8 @@ function makeEssentials(user:string) {
   const exp = getNumericDate(60*60*24); // 24 horas
   const header = { alg: "HS512", typ: "JWT" } as Header;
   const payload = { user, exp } as Payload;
-  return {header,payload}
+  const secret = Deno.env.get("TOKEN_SECRET") as string // Obtener el secreto en "env"
+  return {header,payload,secret}
 }
 
 function getValue(ctx:RouterContext, value:any) {
