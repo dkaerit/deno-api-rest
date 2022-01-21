@@ -25,7 +25,7 @@ $ ./exe.image.ps1
 ```
 
 ## JWT
-<center><img src="https://user-images.githubusercontent.com/24440929/150577171-25c2b652-f16a-4c5f-a8c4-9657df46ea21.png"></center>
+<center><img src="https://user-images.githubusercontent.com/24440929/150577653-5b4bf9bb-18a7-4bd0-a3d9-7c5428c8518c.png"></center>
 
 ## Rutas
 
