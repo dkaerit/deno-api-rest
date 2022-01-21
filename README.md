@@ -35,7 +35,7 @@ JWT server genera el json a raíz de lo que en este proyecto denominamos los `es
 
 ```typescript
 function makeEssentials(user:string) {
-  const expìry = getNumericDate(60*60*24); // 24 horas
+  const expiry = getNumericDate(60*60*24); // 24 horas
   const header = { alg: "HS512", typ: "JWT" } as Header;
   const payload = { user, expiry } as Payload;
   const secret = Deno.env.get("TOKEN_SECRET") as string 
