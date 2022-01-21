@@ -42,7 +42,7 @@ function makeEssentials(user:string) {
 }
 ```
 
-Este servicio se encuentra implementado en el fichero `services/jwt.ts` y la ruta que retorna el token al frontend es manejado por el handler `login()` en ``models/auth.ts`.
+El servicio `JWT` se encuentra implementado en el fichero `services/jwt.ts`, y el handler `login()` que retorna el token junto con sus funciones auxiliares como `makeEssentials()` se encuentran en `models/auth.ts`.
 
 ## Modelos
 ### Usuarios
