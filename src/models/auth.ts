@@ -25,8 +25,8 @@ export const Auth = {
 
 // ————————————————————————————————————————————————— AUXILIARES
 function makeEssentials(user:string) {
-  const exp = getNumericDate(60*60*24); // 24 horas
   const header = { alg: "HS512", typ: "JWT" } as Header;
+  const expiry = getNumericDate(60*60*24); // 24 horas
   const payload = { user, exp } as Payload;
   const secret = Deno.env.get("TOKEN_SECRET") as string // Obtener el secreto en "env"
   return {header,payload,secret}
