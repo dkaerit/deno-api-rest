@@ -25,8 +25,11 @@ $ ./exe.image.ps1
 ```
 
 
-## JWT
-<center><img src="https://user-images.githubusercontent.com/24440929/150577724-c55dfaab-3480-4e29-ab0b-6a76601d3914.png"></center>
+## JWT (Json Web Token)
+<div style="float:left"><img src="https://user-images.githubusercontent.com/24440929/150577724-c55dfaab-3480-4e29-ab0b-6a76601d3914.png"></div>
+
+Los tokens web JSON son un método para representar notificaciones de forma segura entre dos partes. Permite decodificar, verificar y generar JWT. 
+De esta manera podemos generar token en el backend para asociarlos a cada sesión de los usuarios en el frontend, y dotar de la seguridad necesaria a la aplicación web, así como restringir cierta vistas del frontend a cuentas que han iniciado sesión, e incluso a ciertas peticiones http solicitadas al backend.
 
 ## Rutas
 
