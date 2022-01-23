@@ -37,7 +37,7 @@ JWT server (servicio ajeno a la api-rest) genera el json a raíz de lo que en es
 
 * Un header `{ alg: "HS512", typ: "JWT" }`
 * El payload `{ user, expiry }` 
-* Un secreto `TOKEN_SECRET` (éste último normalmente almacenado en las variables de entorno pues no debe ser conocido). 
+* Un secreto `TOKEN_SECRET` (éste último normalmente almacenado en las variables de entorno, pues no debe ser conocido). 
 
 ```typescript
 function makeEssentials(user:string) {
