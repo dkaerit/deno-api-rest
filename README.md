@@ -14,6 +14,7 @@ Este proyecto forma parte de la colección api rest baseplate como micro servici
 
 ## Generalidades
   * Sin gestor de paquetes: [Modulos de terceros](https://deno.land/x)
+  * Estructuración no basada en componentes (agrupados en models, routes, controllers, providers y middlewares)
 
 ## Ejecutar
 
