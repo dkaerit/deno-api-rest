@@ -33,7 +33,11 @@ JWT es un estandar y servicio que nos permitirá la gestión de los web token en
 El funcionamiento es el siguiente: Dado un header de la forma `{username, password}` desde el frontend, primero se verifica que dicho usuario para dicha contraseña existe en la base de datos. Este arrojará verdadero o falso si encontró tal coincidencia. Siendo falso el fin del proceso y por ende, la denegación del token, y sinedo entonces verdadero el que permita continuar con el proceso. 
 
 
-JWT server (servicio ajeno a la api-rest) genera el json a raíz de lo que en este proyecto denominamos (para simplificar) los `essentials`, compuesto de un header `{ alg: "HS512", typ: "JWT" }`, el payload `{ user, expiry }` y un secreto `TOKEN_SECRET` (éste último normalmente almacenado en las variables de entorno pues no debe ser conocido). 
+JWT server (servicio ajeno a la api-rest) genera el json a raíz de lo que en este proyecto denominamos (para simplificar) los `essentials`, compuesto de: 
+
+* Un header `{ alg: "HS512", typ: "JWT" }`
+* El payload `{ user, expiry }` 
+* Un secreto `TOKEN_SECRET` (éste último normalmente almacenado en las variables de entorno pues no debe ser conocido). 
 
 ```typescript
 function makeEssentials(user:string) {
