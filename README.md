@@ -33,8 +33,8 @@ $ git update-index --assume-unchanged .env
 $ ./exe.image.ps1
 ```
 
-
-## JWT (Json Web Token)
+## Helpers
+### JWT (Json Web Token)
 <img align="right" src="https://user-images.githubusercontent.com/24440929/150584119-a836a85b-0330-4686-b3ed-5871cc3378e9.png"> 
 JWT es un estandar y servicio que nos permitirá la gestión de los web token en el backend. De esta manera se podrá asociar a cada sesión de los usuarios en el frontend un token, y dotar de la seguridad necesaria a la aplicación web, así como restringir el acceso de cierta vistas del frontend para cuentas que han iniciado sesión, e incluso a ciertas peticiones http solicitadas al backend.
 
