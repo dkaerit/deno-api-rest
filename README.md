@@ -6,6 +6,14 @@
 <img src="https://img.shields.io/badge/license-MIT-17a8c8" alt="License">
 </p>
 
+## Status
+
+🅾️ failing `MongoClient`
+✅ passing `djwt` 
+✅ passing `oak` 
+✅ passing `dotenv` 
+✅ passing `cors`
+
 ## About
 
 Deno api rest baseplate es una estructura de partida cuya finalidad sea darle uso para ahorrar tiempo en la implementación de un backend con dicho framewrok, en una intención de ahorrar tiempo o bien para proyectos de uso didácticos o personales. 
