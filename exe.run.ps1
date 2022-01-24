@@ -1,1 +1,1 @@
-deno run -A --unstable mod.ts
+deno run -A --unstable ./src/mod.ts

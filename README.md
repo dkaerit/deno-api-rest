@@ -12,7 +12,7 @@ Deno api rest baseplate es una estructura de partida cuya finalidad sea darle us
 
 Este proyecto forma parte de la colección api rest baseplate como micro servicios.
 
-## Generalidades
+## Features
   * Sin gestor de paquetes: [Modulos de terceros](https://deno.land/x)
   * Estructuración no basada en componentes (agrupados en models, routes, controllers, providers y middlewares)
 

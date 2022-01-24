@@ -1,4 +1,4 @@
-import { Router, RouterContext } from "../deps.ts";
+import { Router, RouterContext } from "../../../_dependencies/oak.ts";
 // ---- Ruta raíz ----
 
 // RUTAS
@@ -9,6 +9,7 @@ export default RootRouter  // Rutas raíz
 // CONTROLADORES
 function version() {
     return (ctx: RouterContext) => {
+        ctx.response.status = 200;
         ctx.response.body = `
               𝗦𝗲𝗿𝘃𝗲𝗿 𝗿𝘂𝗻𝗻𝗶𝗻𝗴 𝗼𝗻 🦕
         
