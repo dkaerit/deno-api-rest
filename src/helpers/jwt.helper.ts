@@ -1,4 +1,4 @@
-import { decode, create, Header, Payload, getNumericDate, verify } from "../../_dependencies/djwt.ts";
+import { create, Header, Payload, getNumericDate, verify } from "../../_dependencies/djwt.ts";
 
 export class JwtHelper {
   private static jwtHeader = { alg: "HS512", typ: "JWT" } as Header;
@@ -35,7 +35,10 @@ export class JwtHelper {
     try {
       // const { payload } = decode(token as string);
       return await verify(token, this.secret, this.jwtHeader.alg);
-    } catch(err) { throw new Error("access_token is invalid or expired.") }
+    } catch(err) { 
+      console.error(err);
+      throw new Error("access_token is invalid or expired.") 
+    }
   }
 
 
