@@ -1,5 +1,6 @@
 // deno-lint-ignore-file no-explicit-any
 import { Collection } from "../../_dependencies/mongo.ts";
+import { JsonHelper } from "../../src/helpers/json.helpers.ts";
 
 export const Query = { 
 
@@ -13,8 +14,13 @@ export const Query = {
    
     async createEntry(entry:Record<string,unknown>, collection:Collection<any>): Promise<any> {
       try {
+
         return (await collection.insertOne(entry)).toString();
-      } catch(error) { return error as Error; }
+        
+      } catch(err) { 
+        console.error(err);
+        throw new Error(JSON.parse(JsonHelper.fixStringFormat(`{${err}}`)).MongoError.errmsg);
+      }
     },
     
     /**
@@ -26,10 +32,18 @@ export const Query = {
      */
   
     async getEntries(skip:number, limit:number, collection:Collection<any>): Promise<any> {
-      return await collection.find(
-        {}, 
-        { noCursorTimeout: false } as Record<string,unknown>)
-        .skip(skip).limit(limit).toArray();
+      try {
+        
+        return await collection.find(
+          {}, 
+          { noCursorTimeout: false } as Record<string,unknown>)
+          .skip(skip).limit(limit).toArray();
+
+      } catch(err) { 
+        var e = new Error(JSON.parse(JsonHelper.fixStringFormat(`{${err.message}}`)).MongoError.errmsg);
+        e.name = "Mongo Error";
+        throw e;
+      }
     },
 
     /**
@@ -42,10 +56,16 @@ export const Query = {
   
     async findByFilter(field:string, filter:string, collection:Collection<any>): Promise<any> {
       try {
+
         return await collection.findOne(
           { [field]: filter }, 
           { noCursorTimeout: false } as Record<string,unknown>);
-      } catch(error) { return error as Error; }
+
+      } catch(err) { 
+        var e = new Error(JSON.parse(JsonHelper.fixStringFormat(`{${err.message}}`)).MongoError.errmsg);
+        e.name = "Mongo Error";
+        throw e;
+      }
     },
 
     /**
@@ -58,10 +78,16 @@ export const Query = {
   
     async findByFilters(filter:Record<string,any>, collection:Collection<any>): Promise<any> {
       try {
+
         return await collection.findOne(
           filter, 
           { noCursorTimeout: false } as Record<string,unknown>);
-      } catch(error) { return error as Error; }
+
+      } catch(err) { 
+        var e = new Error(JSON.parse(JsonHelper.fixStringFormat(`{${err.message}}`)).MongoError.errmsg);
+        e.name = "Mongo Error";
+        throw e;
+      }
     },
     
     /**
@@ -74,9 +100,15 @@ export const Query = {
   
     async updateEntry(field:string, filter:string, entry:Record<string,unknown>, collection:Collection<any>): Promise<any> {
       try {
+
         const update = { $set: entry };
         return await collection.updateOne({ [field]: filter }, update);
-      } catch(error) { return error as Error; }
+
+      } catch(err) { 
+        var e = new Error(JSON.parse(JsonHelper.fixStringFormat(`{${err.message}}`)).MongoError.errmsg);
+        e.name = "Mongo Error";
+        throw e;
+      }
     },
 
     /**
@@ -89,9 +121,14 @@ export const Query = {
   
     async deleteEntry(field:string, filter:string, collection:Collection<any>): Promise<any> {
       try {
-        return await collection.deleteOne(
-          { [field]: filter });
-      } catch(error) { return error as Error; }
+
+        return await collection.deleteOne({ [field]: filter });
+
+      } catch(err) { 
+        var e = new Error(JSON.parse(JsonHelper.fixStringFormat(`{${err.message}}`)).MongoError.errmsg);
+        e.name = "Mongo Error";
+        throw e;
+      }
     },
   
   }

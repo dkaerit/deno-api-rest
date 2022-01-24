@@ -1,6 +1,6 @@
+// deno-lint-ignore-file no-explicit-any
 import { RouterContext } from "../../../_dependencies/oak.ts";
 import { Query } from "../../../database/queries/mongo.queries.ts";
-import { checkUser, checkValue } from "../../helpers/auth.helpers.ts"
 import { UserCollection } from "../models/user.model.ts"
 import { JwtHelper } from "../../helpers/jwt.helper.ts";
 
@@ -25,4 +25,15 @@ export class AuthController {
             ctx.response.status = 200;
         }
     }
+}
+
+
+function checkValue(ctx:RouterContext, value:any) {
+    if (typeof value != typeof JSON) ctx.throw(400, "Bad format: request body is not JSON");
+    if (!value.user) ctx.throw(400, "Bad Request: username is missing");
+    if (!value.passwd) ctx.throw(400, "Bad Request: password is missing");
+  }
+  
+function checkUser(ctx:RouterContext, entry:any) {
+    if (!entry) ctx.throw(422, "Invalid input: No match that username");
 }

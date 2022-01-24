@@ -2,20 +2,28 @@ import { Context } from "../../_dependencies/oak.ts";
 import { verify } from "../../_dependencies/djwt.ts";
 import { JwtHelper } from "../helpers/jwt.helper.ts";
 
+
+
+  /**
+   * @brief Comprobar que una petición http trae en sus headers la autorización con el token
+   * @param ctx { request, response, ... }
+   */
+
 export const guard = async (ctx: Context, next: () => Promise<void>) => {
-  const secret = Deno.env.get("TOKEN_SECRET") as string;  // Obtener el secreto en 'env'
-
   try {
-    const jwt = JwtHelper.getToken(ctx.request.headers);  // obtener el token dado en el header desde el frontend
-    if (!jwt) throw new Error("!jwt");                    // assert, token generado satisfactoriamente
+    // ej. "Bearer l$dasXldkVñdlañd..."
+    const auth = ctx.request.headers.get("Authorization"); 
+    if (!auth) throw new Error("Headers without Authorization");
 
-    const payload = await verify(jwt, secret, "HS512");   // verificar el token jwt basado en codificación HS512
-    if (!payload) throw new Error("!payload");            // assert, token válido
-    await next();                                         // next() permite la espera de ejecuciones asíncronas
-
+    // ["Beaarer", "l$dasXldkVñdlañd..."]
+    const [method, token] = auth? auth.split(" "): [null, null]; 
+    if (method !== "Bearer") throw new Error(`"${method}" is wrong method`); 
+    if (!token)              throw new Error("missing json web token"); 
+    
+    await next(); // next() permite la espera de ejecuciones asíncronas
   } 
   catch (err) {
     console.error(err);
-    ctx.throw(401, "Guard: You aren't authorized to access this route");
+    ctx.throw(401, err.message);
   }
 }

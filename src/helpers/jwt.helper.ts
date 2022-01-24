@@ -1,63 +1,51 @@
-import { decode, create, Header, Payload, getNumericDate } from "../../_dependencies/djwt.ts";
+import { decode, create, Header, Payload, getNumericDate, verify } from "../../_dependencies/djwt.ts";
 
 export class JwtHelper {
-
-
-  
-
-
-
-  public static getToken(headers: Headers) {
-    const authorization = headers.get("Authorization"); // Obtener el objeto de autorización de jwt
-    if (!authorization) return null;
-
-    const [method, token] = authorization? authorization.split(" "): [null,null];
-    if (method !== "Bearer") return null; // Bearer es un token como "asdfkjshfkj4hkfj34./sdfhjksdhfjk.34r"
-    if (!token)              return null; 
-
-    return token;
-  }
-
-
-  
+  private static jwtHeader = { alg: "HS512", typ: "JWT" } as Header;
+  private static secret    = Deno.env.get("TOKEN_SECRET") as string;
 
 
 
-
-  public static getPayloadFromToken(headers: Headers) {
-    try {
-      const token = this.getToken(headers);
-      if(!token) return null;
-  
-      const { payload } = decode(token as string);
-      if(!payload) return null;
-      
-      return payload;
-    } catch {
-      return null;
-    }
-  }
-
-
-
-
-
-
-  public static makeEssentials(user: string, hours: number) {
-    const header = { alg: "HS512", typ: "JWT" } as Header;
-    const payload = { user, exp: getNumericDate(60*60*hours) } as Payload; // horas (hours)
-    const secret = Deno.env.get("TOKEN_SECRET") as string // Obtener el secreto en "env"
-    return {header, payload, secret}
-  }
-
-
-
-
-  
+  /**
+   * @brief Generación del token concedido por jwt
+   * @param user nombre del usuario que se usará como semilla
+   * @param hours tiempo de expiración del token en horas
+   * @return object { token }
+   */
 
   public static async generateToken(user: string, hours: number): Promise<Record<string,unknown>> {
-    const {header, payload, secret} = this.makeEssentials(user, hours)
-    return { token: await create(header, payload, secret) }
+    const payload: Payload = { 
+      user, 
+      iss: "djwt",
+      iat: Date.now(),
+      exp: getNumericDate(60*60*hours)
+    };
+    return { token: await create(this.jwtHeader, payload, this.secret) }
   }
+  
+
+
+  /**
+   * @brief Se verifica { token, secret, jwt_header } y se devuelve el jwt_payload
+   * @param token Bearer Token esperado
+   * @return Promise<Payload | Error> Payload del tipo { user, exp }
+   */
+
+  public static async extractPayload(token: string): Promise<Payload | Error> {
+    try {
+      // const { payload } = decode(token as string);
+      return await verify(token, this.secret, this.jwtHeader.alg);
+    } catch(err) { throw new Error("access_token is invalid or expired.") }
+  }
+
+
+
+  
+
+
+
+
+
+
 
 }

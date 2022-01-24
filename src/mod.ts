@@ -1,5 +1,5 @@
 import { Application, oakCors } from "../_dependencies/oak.ts"; const app = new Application();
-import { indexRoutes } from "./components/routes/_index.ts";
+import { indexRoutes } from "./components/routes/_root.router.ts";
 //import { authorized } from "./authorized.ts";
 
 // ————————————————————————————————————————————————— DATOS DEL SERVIDOR
