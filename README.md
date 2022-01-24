@@ -16,7 +16,7 @@
 
 ## About
 
-Deno api rest baseplate es una estructura de partida cuya finalidad sea darle uso para ahorrar tiempo en la implementación de un backend con dicho framewrok, en una intención de ahorrar tiempo o bien para proyectos de uso didácticos o personales. 
+Deno api rest baseplate es una estructura de partida cuya finalidad (como en los boilerplate) es la de ahorrar código repetitivo/esencial en la implementación de un backend con dicho deno y deno_mongo, en una intención de recortar tiempo, además de esttar pensdo para proyectos de uso didácticos o personales. 
 
 Este proyecto forma parte de la colección api rest baseplate como micro servicios.
 
