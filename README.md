@@ -49,12 +49,7 @@ JWT server (servicio ajeno a la api-rest) genera el json a raíz de lo que en es
 * Un secreto `TOKEN_SECRET` (éste último almacenado en las variables de entorno, pues no debe ser conocido). 
 
 ```typescript
-function makeEssentials(user:string) {
-  const header = { alg: "HS512", typ: "JWT" } as Header;
-  const payload = { user, getNumericDate(60*60*24) } as Payload;
-  const secret = Deno.env.get("TOKEN_SECRET") as string 
-  return {header,payload,secret}
-}
+(en proceso)
 ```
 
 El servicio `JWT` se encuentra implementado en el fichero `services/jwt.ts`, y el handler `login()` que retorna el token junto con sus funciones auxiliares como `makeEssentials()` se encuentran en `models/auth.ts`.
@@ -62,12 +57,7 @@ El servicio `JWT` se encuentra implementado en el fichero `services/jwt.ts`, y e
 ## Modelos
 ### Usuarios
 ```typescript
-export interface UserSchema {
-  _id: {$oid: string};
-  user: string;
-  email: string;
-  passwd: string;
-}
+(en proceso)
 
 ```
 
