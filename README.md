@@ -8,11 +8,7 @@
 
 ## Status
 
-> 🅾️ failing `MongoClient`  
-> ✅ passing `djwt`  
-> ✅ passing `oak`  
-> ✅ passing `dotenv`  
-> ✅ passing `cors`  
+> failing `MongoClient`  
 
 ## About
 
